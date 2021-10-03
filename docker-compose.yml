@@ -1,0 +1,43 @@
+version: '3.8'
+
+volumes:
+  pg-data:
+  redis-data:
+
+services:
+  nginx:
+    image: rodionoff/nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - my_app_net
+    volumes:
+      - ./www:/var/www/html
+  php:
+    image: rodionoff/php-fpm
+    volumes:
+      - ./www:/var/www/html
+    depends_on:
+      - postgres
+    networks:
+      - my_app_net
+  postgres:
+    image: rodionoff/postgres
+    volumes:
+      - "pg-data:/var/lib/postgresql/data"
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=user
+      - POSTGRES_DB=public
+    networks:
+      - my_app_net
+  redis:
+    image: rodionoff/redis
+    volumes:
+      - "redis-data:/data"
+    networks:
+      - my_app_net
+
+networks:
+  my_app_net:
