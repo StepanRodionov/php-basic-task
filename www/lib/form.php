@@ -1,6 +1,10 @@
 <?php
 declare(strict_types=1);
 
+if (!defined('APP_STARTED')) {
+    die();
+}
+
 require_once 'db.php';
 
 $type = $_POST['type'];
@@ -33,7 +37,7 @@ function addUser()
     $userData['EMAIL'] = $_POST['email'];
 
     // Имя и фамилия обязательны!
-    if (!isset($userData['NAME']) || !isset($userData['NAME'])) {
+    if (!isset($userData['NAME']) || !isset($userData['SURNAME'])) {
         die('Имя и фамилия обязательны');
     }
 
@@ -49,6 +53,40 @@ function addUser()
 
 function importUsers()
 {
-    // TODO - import users from csv
+    $file = $_FILES['import_data'];
+    if (!$file) {
+        die('Нет файла с пользователями');
+    }
+
+    $uploaddir = $_SERVER['DOCUMENT_ROOT'] . '/storage/';
+    $uploadfile = $uploaddir . basename($file['name']);
+
+    if (!move_uploaded_file($file['tmp_name'], $uploadfile)) {
+        die('Не удалось сохранить файл');
+    }
+
+    $users = [];
+    $fp = fopen($uploadfile, 'rb');
+    while ($row = fgetcsv($fp, 1024, ';')) {
+        $users[] = $row;
+    }
+    // Первая строка - это заголовок, удаляем ее
+    array_shift($users);
+
+    $userData = [];
+    foreach ($users as $user) {
+        $userData['NAME'] = $user[0];
+        $userData['SURNAME'] = $user[1];
+        $userData['PHONE'] = $user[2];
+        $userData['EMAIL'] = $user[3];
+
+        // Имя и фамилия обязательны!
+        if (!isset($userData['NAME']) || !isset($userData['SURNAME'])) {
+            // Нужна запись в лог
+            continue;
+        }
+        insertUser($userData);
+    }
+
     return 'import_success';
 }
