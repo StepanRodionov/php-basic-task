@@ -14,9 +14,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/requirements.php';
         <input type="hidden" name="type" value='add_user'/>
         <input type="submit" value ="Отправить">
     </form>
-    <?php if ($formResult === 'add_success') {
-        echo "<span>Пользователь добавлен!</span>";
-    } ?>
 </div>
 <br>
 <hr>
@@ -29,12 +26,33 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/requirements.php';
         <input type="hidden" name="type" value='import_users'/>
         <input type="submit" value ="Загрузить пользователей">
     </form>
-    <?php if ($formResult === 'import_success') {
-        echo "<span>Импорт прошел успешно</span>";
-    } ?>
 </div>
-<?php
-    //  TODO - выборка пользователей
-?>
+<?php $users = getAllUsers(); ?>
 
-<!-- TODO - вывод пользователей -->
+<table border="1">
+    <thead>
+        <tr>
+            <td>Номер</td>
+            <td>Имя</td>
+            <td>Фамилия</td>
+            <td>Телефон</td>
+            <td>Почта</td>
+            <td>Дата создания</td>
+        </tr>
+    </thead>
+    <tbody>
+<?php //  не используем альтернативный синтаксис foreach(): endforeach;
+foreach ($users as $user) { ?>
+        <tr>
+            <td><?= $user['id']?></td>
+            <td><?= $user['name']?></td>
+            <td><?= $user['surname']?></td>
+            <td><?= $user['phone']?></td>
+            <td><?= $user['email']?></td>
+            <td><?= $user['created_at']?></td>
+        </tr>
+<?php } ?>
+    </tbody>
+</table>
+
+<?php

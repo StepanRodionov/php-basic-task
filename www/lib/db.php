@@ -53,3 +53,21 @@ SQL;
     $stmt->execute();
 }
 
+
+function getAllUsers()
+{
+    $pdo = getDbConnection();
+    $result = $pdo->query('SELECT * FROM public.users');
+
+    /**
+     * PDO::FETCH_ASSOC превратит в ассоциативный массив, где ключ - название поля, значение - значение
+     */
+    $users = $result->fetchAll(PDO::FETCH_ASSOC);
+
+    return $users;
+}
+
+function getUserById(int $id)
+{
+
+}

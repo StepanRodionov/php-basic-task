@@ -20,9 +20,11 @@ $formResult = null;
 switch ($type) {
     case 'add_user':
         $formResult = addUser();
+        header("Location: http://{$_SERVER['HTTP_HOST']}/");
         break;
     case 'import_users':
         $formResult = importUsers();
+        header("Location: http://{$_SERVER['HTTP_HOST']}/");
         break;
     default:
         die('Неверное действие!');
@@ -37,7 +39,7 @@ function addUser()
     $userData['EMAIL'] = $_POST['email'];
 
     // Имя и фамилия обязательны!
-    if (!isset($userData['NAME']) || !isset($userData['SURNAME'])) {
+    if (!$userData['NAME'] || !$userData['SURNAME']) {
         die('Имя и фамилия обязательны');
     }
 
@@ -81,7 +83,7 @@ function importUsers()
         $userData['EMAIL'] = $user[3];
 
         // Имя и фамилия обязательны!
-        if (!isset($userData['NAME']) || !isset($userData['SURNAME'])) {
+        if (!$userData['NAME'] || !$userData['SURNAME']) {
             // Нужна запись в лог
             continue;
         }
