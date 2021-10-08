@@ -6,6 +6,7 @@ if (!defined('APP_STARTED')) {
 }
 
 require_once 'db.php';
+require_once 'log.php';
 
 $type = $_POST['type'];
 if (!isset($_POST['type'])) {
@@ -46,6 +47,7 @@ function addUser()
     // Обработаем ошибку БД, если она случится
     try{
         insertUser($userData);
+        logData("Добавлен клиент {$userData['NAME']} {$userData['SURNAME']}");
     } catch (Throwable $e) {
         var_dump($e);
     }
