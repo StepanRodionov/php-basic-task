@@ -5,9 +5,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/requirements.php';
 
 if (!isset($_GET['user_id'])) {
 ?>
-<h1>Пользователи</h1>
+<h1>Клиенты</h1>
 <div>
-    <h3>Добавить пользователя</h3>
+    <h3>Добавить клиента</h3>
     <form action="/" method="POST">
         <input type="text" name="name" placeholder="Имя" /><br>
         <input type="text" name="surname" placeholder="Фамилия" /><br>
@@ -22,7 +22,7 @@ if (!isset($_GET['user_id'])) {
 <hr>
 <br>
 <div>
-    <h3>Массовый импорт пользователей</h3>
+    <h3>Массовый импорт клиентов</h3>
     <form action="/" enctype="multipart/form-data" method="POST">
         <input type="file" name="import_data" accept="text/csv" /><br>
         <input type="hidden" name="csrf-token" value='6154ae4355669'/>
@@ -75,16 +75,16 @@ foreach ($users as $user) { ?>
 } else {
     $userId = (int)$_GET['user_id'];
     if ($userId < 1) {
-        die('Некорректный id пользователя!');
+        die('Некорректный id клиента!');
     }
     $user = getUserById($userId);
 ?>
     <div>
-        <h3>Данные пользователя <?= $user['name'] . ' ' . $user['surname'] ?></h3>
+        <h3>Данные клиента <b><?= $user['name'] . ' ' . $user['surname'] ?></b></h3>
     </div>
     <table border="1">
         <tr>
-            <td>Id пользователя</td>
+            <td>Id клиента</td>
             <td><?= $user['id']?></td>
         </tr>
         <tr>

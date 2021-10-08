@@ -57,7 +57,7 @@ function importUsers()
 {
     $file = $_FILES['import_data'];
     if (!$file) {
-        die('Нет файла с пользователями');
+        die('Нет файла с клиентами');
     }
 
     $uploaddir = $_SERVER['DOCUMENT_ROOT'] . '/storage/';
