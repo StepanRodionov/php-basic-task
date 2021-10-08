@@ -39,7 +39,7 @@ function addUser()
     $userData['EMAIL'] = $_POST['email'];
 
     // Имя и фамилия обязательны!
-    if (!$userData['NAME'] || !$userData['SURNAME']) {
+    if (!$userData['NAME'] || !$userData['SURNAME'] || !$userData['PHONE']) {
         die('Имя и фамилия обязательны');
     }
 
@@ -83,7 +83,7 @@ function importUsers()
         $userData['EMAIL'] = $user[3];
 
         // Имя и фамилия обязательны!
-        if (!$userData['NAME'] || !$userData['SURNAME']) {
+        if (!$userData['NAME'] || !$userData['SURNAME'] || !$userData['PHONE']) {
             // Нужна запись в лог
             continue;
         }
