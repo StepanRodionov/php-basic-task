@@ -6,7 +6,7 @@ create table users
         primary key,
     name       varchar(255)                       not null,
     surname    varchar(255)                       null,
-    phone      varchar(255)                       null,
+    phone      varchar(255)                       null not null,
     email      varchar(255)                       null,
     created_at datetime default CURRENT_TIMESTAMP not null
 );
