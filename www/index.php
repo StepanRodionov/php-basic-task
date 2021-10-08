@@ -2,9 +2,12 @@
 declare(strict_types=1);
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/requirements.php';
+
+if (!isset($_GET['user_id'])) {
 ?>
+<h1>Пользователи</h1>
 <div>
-    <span>Добавить пользователя</span>
+    <h3>Добавить пользователя</h3>
     <form action="/" method="POST">
         <input type="text" name="name" placeholder="Имя" /><br>
         <input type="text" name="surname" placeholder="Фамилия" /><br>
@@ -19,7 +22,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/requirements.php';
 <hr>
 <br>
 <div>
-    <span>Массовый импорт пользователей</span>
+    <h3>Массовый импорт пользователей</h3>
     <form action="/" enctype="multipart/form-data" method="POST">
         <input type="file" name="import_data" accept="text/csv" /><br>
         <input type="hidden" name="csrf-token" value='6154ae4355669'/>
@@ -43,10 +46,23 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/requirements.php';
     <tbody>
 <?php //  не используем альтернативный синтаксис foreach(): endforeach;
 foreach ($users as $user) { ?>
+
         <tr>
-            <td><?= $user['id']?></td>
-            <td><?= $user['name']?></td>
-            <td><?= $user['surname']?></td>
+            <td>
+                <a href="/?user_id=<?= $user['id']?>">
+                    <?= $user['id']?>
+                </a>
+            </td>
+            <td>
+                <a href="/?user_id=<?= $user['id']?>">
+                    <?= $user['name']?>
+                </a>
+            </td>
+            <td>
+                <a href="/?user_id=<?= $user['id']?>">
+                    <?= $user['surname']?>
+                </a>
+            </td>
             <td><?= $user['phone']?></td>
             <td><?= $user['email']?></td>
             <td><?= $user['created_at']?></td>
@@ -56,3 +72,43 @@ foreach ($users as $user) { ?>
 </table>
 
 <?php
+} else {
+    $userId = (int)$_GET['user_id'];
+    if ($userId < 1) {
+        die('Некорректный id пользователя!');
+    }
+    $user = getUserById($userId);
+?>
+    <div>
+        <h3>Данные пользователя <?= $user['name'] . ' ' . $user['surname'] ?></h3>
+    </div>
+    <table border="1">
+        <tr>
+            <td>Id пользователя</td>
+            <td><?= $user['id']?></td>
+        </tr>
+        <tr>
+            <td>Имя</td>
+            <td><?= $user['name']?></td>
+        </tr>
+        <tr>
+            <td>Фамилия</td>
+            <td><?= $user['surname']?></td>
+        </tr>
+        <tr>
+            <td>Телефон</td>
+            <td><?= $user['phone']?></td>
+        </tr>
+        <tr>
+            <td>Почта</td>
+            <td><?= $user['email']?></td>
+        </tr>
+        <tr>
+            <td>Дата создания</td>
+            <td><?= $user['created_at']?></td>
+        </tr>
+    </table>
+    <div>
+        <a href="/">Вернуться к списку</a>
+    </div>
+<?php }

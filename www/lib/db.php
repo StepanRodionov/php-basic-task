@@ -33,7 +33,7 @@ function connectDb($host, $port, $dbName, $username, $password): PDO
     return $pdo;
 }
 
-function insertUser(array $user)
+function insertUser(array $user): void
 {
     $pdo = getDbConnection();
     $name = $user['NAME'];
@@ -54,7 +54,7 @@ SQL;
 }
 
 
-function getAllUsers()
+function getAllUsers(): array
 {
     $pdo = getDbConnection();
     $result = $pdo->query('SELECT * FROM public.users');
@@ -67,7 +67,14 @@ function getAllUsers()
     return $users;
 }
 
-function getUserById(int $id)
+function getUserById(int $id): array
 {
+    $pdo = getDbConnection();
+    $stmt = $pdo->prepare('SELECT * FROM public.users WHERE id = :id');
+    $stmt->bindParam('id', $id);
 
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $result;
 }
