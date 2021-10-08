@@ -10,6 +10,5 @@ try{
 function logData(string $log): void
 {
     global $logFile;
-    $log2 = (new DateTime())->format('Y-m-d H:i:s') . ' ' . $log;
-    fwrite($logFile, $log2 . PHP_EOL);
+    fwrite($logFile, date('Y-m-d H:i:s') . ' ' . $log . PHP_EOL);
 }
