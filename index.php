@@ -70,4 +70,3 @@ foreach ($users as $user) { ?>
     </tbody>
 </table>
 
-
