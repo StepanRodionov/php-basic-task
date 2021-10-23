@@ -4,6 +4,7 @@ declare(strict_types=1);
 const APP_STARTED = true;
 session_start();
 
+require_once 'User.php';
 require_once 'form.php';
 require_once 'db.php';
 require_once 'log.php';

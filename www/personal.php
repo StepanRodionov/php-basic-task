@@ -9,34 +9,35 @@ if ($userId < 1) {
     die('Некорректный id клиента!');
 }
 $user = getUserById($userId);
+
 ?>
     <div>
-        <h3>Данные клиента <b><?= $user['name'] . ' ' . $user['surname'] ?></b></h3>
+        <h3>Данные клиента <b><?= $user->getFullName() ?></b></h3>
     </div>
     <table border="1">
         <tr>
             <td>Id клиента</td>
-            <td><?= $user['id']?></td>
+            <td><?= $user->getId() ?></td>
         </tr>
         <tr>
             <td>Имя</td>
-            <td><?= $user['name']?></td>
+            <td><?= $user->getName() ?></td>
         </tr>
         <tr>
             <td>Фамилия</td>
-            <td><?= $user['surname']?></td>
+            <td><?= $user->getSurname() ?></td>
         </tr>
         <tr>
             <td>Телефон</td>
-            <td><?= $user['phone']?></td>
+            <td><?= $user->getPhone() ?></td>
         </tr>
         <tr>
             <td>Почта</td>
-            <td><?= $user['email']?></td>
+            <td><?= $user->getEmail() ?></td>
         </tr>
         <tr>
             <td>Дата создания</td>
-            <td><?= $user['created_at']?></td>
+            <td><?= $user->getCreatedAt() ?></td>
         </tr>
     </table>
     <div>

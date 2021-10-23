@@ -64,10 +64,15 @@ function getAllUsers(): array
      */
     $users = $result->fetchAll(PDO::FETCH_ASSOC);
 
-    return $users;
+    $result = [];
+    foreach ($users as $userArray) {
+        $result[] = createUserFromArray($userArray);
+    }
+
+    return $result;
 }
 
-function getUserById(int $id): array
+function getUserById(int $id): User
 {
     $pdo = getDbConnection();
     $stmt = $pdo->prepare('SELECT * FROM public.users WHERE id = :id');
@@ -76,5 +81,20 @@ function getUserById(int $id): array
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    return $result;
+
+    return createUserFromArray($result);
 }
+
+function createUserFromArray(array $result): Admin
+{
+    $user = new Admin();
+    $user->setId($result['id']);
+    $user->setName($result['name']);
+    $user->setSurname($result['surname']);
+    $user->setEmail($result['email']);
+    $user->setPhone($result['phone']);
+    $user->setCreatedAt($result['created_at']);
+
+    return $user;
+}
+
