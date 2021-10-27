@@ -29,7 +29,12 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/requirements.php';
         <input type="submit" value ="Загрузить пользователей">
     </form>
 </div>
-<?php $users = getAllUsers(); ?>
+<?php
+$source = new DBUserSource();
+$userRepository = new UsersRepository($source);
+
+$users = $userRepository->getUsers();
+?>
 
 <table border="1">
     <thead>

@@ -8,7 +8,7 @@ if (!defined('APP_STARTED')) {
 require_once 'db.php';
 require_once 'log.php';
 
-$type = $_POST['type'];
+$type = $_POST['type'] ?? null;
 if (!isset($_POST['type'])) {
     return;
 }
