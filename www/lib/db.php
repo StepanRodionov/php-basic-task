@@ -16,6 +16,49 @@ $conf = [
 $connection = null;
 
 
+class DbConnection
+{
+    private static $instance = null;
+
+    protected $connection;
+
+    protected function __construct($host, $port, $dbName, $username, $password)
+    {
+        $this->connection = new PDO("mysql:host={$host}:{$port};dbname={$dbName}",$username, $password);
+    }
+
+    protected function __clone(): void
+    {
+    }
+
+    public static function getInstance($host, $port, $dbName, $username, $password) {
+        if (!self::$instance) {
+            self::$instance = new DbConnection($host, $port, $dbName, $username, $password);
+        }
+
+        return self::$instance;
+    }
+
+    public function getConnection(): PDO
+    {
+        return $this->connection;
+    }
+}
+
+
+$dbConnection = DbConnection::getInstance($conf['host'], $conf['port'], $conf['db_name'], $conf['username'], $conf['password']);
+$dbConnection2 = DbConnection::getInstance($conf['host'], $conf['port'], $conf['db_name'], $conf['username'], $conf['password']);
+$dbConnection3 = DbConnection::getInstance($conf['host'], $conf['port'], $conf['db_name'], $conf['username'], $conf['password']);
+$dbConnection4 = DbConnection::getInstance($conf['host'], $conf['port'], $conf['db_name'], $conf['username'], $conf['password']);
+$dbConnection5 = DbConnection::getInstance($conf['host'], $conf['port'], $conf['db_name'], $conf['username'], $conf['password']);
+$dbConnection6 = DbConnection::getInstance($conf['host'], $conf['port'], $conf['db_name'], $conf['username'], $conf['password']);
+
+
+$pdo = $dbConnection6->getConnection();
+
+$res = $pdo->query('Select * from `users`')->fetchAll();
+
+
 function getDbConnection(): PDO
 {
     global $conf;
