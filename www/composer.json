@@ -1,0 +1,21 @@
+{
+    "name": "otus/demoapp",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Otus\\Demoapp\\": "lib/src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Stepan Rodionov",
+            "email": "Rodion.ko@yandex.ru"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "vlucas/phpdotenv": "^5.4",
+        "monolog/monolog": "^2.3",
+        "symfony/var-dumper": "^5.3"
+    }
+}

@@ -6,7 +6,15 @@ ini_set('display_startup_errors', '1');
 ini_set('display_errors', '1');
 
 const APP_STARTED = true;
+const APP_ENV = 'dev';
 session_start();
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
+$dotenv->load();
+
+// dd($_ENV);   // Наши envs тут!
 
 require_once 'User.php';
 require_once 'form.php';
@@ -20,9 +28,3 @@ require_once 'classes/ClientsGetter/HttpUserSource.php';
 require_once 'classes/ClientsGetter/LocalUserSource.php';
 require_once 'classes/ClientsGetter/UserSourceInterface.php';
 require_once 'classes/ClientsGetter/UsersRepository.php';
-
-function dd($val)
-{
-    var_dump($val);
-    die();
-}
