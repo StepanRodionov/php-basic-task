@@ -8,16 +8,12 @@ if (!defined('APP_STARTED')) {
 }
 
 $conf = [
-  'host' => 'localhost',
-  'port' => 3306,
-  'db_name' => 'public',
-  'username' => 'admin',
-  'password' => 'ad9NSgzgioyf'
+  'host' => getenv('DB_HOST'),
+  'port' => getenv('DB_PORT'),
+  'db_name' => getenv('DB_NAME'),
+  'username' => getenv('DB_USERNAME'),
+  'password' => getenv('DB_PASSWORD')
 ];
-$connection = null;
-
-
-
 
 function getDbConnection(): PDO
 {

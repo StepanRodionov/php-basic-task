@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use Otus\Demoapp\GlobalSettings;
+
 require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/requirements.php';
 
 ?>
@@ -30,7 +32,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/requirements.php';
     </form>
 </div>
 <?php
-$source = new DBUserSource();
+$settings = GlobalSettings::getInitialisedSettings();
+$sourceClass = $settings['services']['user_source'];
+
+$source = new $sourceClass();
 $userRepository = new UsersRepository($source);
 
 $users = $userRepository->getUsers();
