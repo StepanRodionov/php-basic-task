@@ -1,8 +1,12 @@
 <?php
 declare(strict_types=1);
 
+use Monolog\Formatter\LineFormatter;
 use Otus\Demoapp\GlobalSettings;
 use Symfony\Component\Yaml\Yaml;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Handler\FirePHPHandler;
 
 error_reporting(E_ALL);
 ini_set('display_startup_errors', '1');
@@ -24,6 +28,14 @@ $settings = Yaml::parseFile($_SERVER['DOCUMENT_ROOT'] . '/setup/settings.yaml');
 GlobalSettings::createFromArray($settings);
 
 // dd($settings);  // Наш конфиг тут
+
+/**
+ * Настраиваем логгер
+ */
+$logger = new Logger('my_logger');
+$logger->pushHandler(new StreamHandler($_SERVER['DOCUMENT_ROOT'] . '/storage/monolog.log', Logger::DEBUG));
+
+$logger->info('My logger is now ready');
 
 require_once 'User.php';
 require_once 'form.php';
