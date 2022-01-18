@@ -33,10 +33,10 @@ switch ($type) {
 function addUser()
 {
     $userData = [];
-    $userData['NAME'] = $_POST['name'];
-    $userData['SURNAME'] = $_POST['surname'];
-    $userData['PHONE'] = $_POST['phone'];
-    $userData['EMAIL'] = $_POST['email'];
+    $userData['NAME'] = htmlentities($_POST['name']);
+    $userData['SURNAME'] = htmlentities($_POST['surname']);
+    $userData['PHONE'] = htmlentities($_POST['phone']);
+    $userData['EMAIL'] = htmlentities($_POST['email']);
 
     // Имя и фамилия обязательны!
     if (!$userData['NAME'] || !$userData['SURNAME']) {
@@ -77,10 +77,10 @@ function importUsers()
 
     $userData = [];
     foreach ($users as $user) {
-        $userData['NAME'] = $user[0];
-        $userData['SURNAME'] = $user[1];
-        $userData['PHONE'] = $user[2];
-        $userData['EMAIL'] = $user[3];
+        $userData['NAME'] = htmlentities($user[0]);
+        $userData['SURNAME'] = htmlentities($user[1]);
+        $userData['PHONE'] = htmlentities($user[2]);
+        $userData['EMAIL'] = htmlentities($user[3]);
 
         // Имя и фамилия обязательны!
         if (!$userData['NAME'] || !$userData['SURNAME']) {
