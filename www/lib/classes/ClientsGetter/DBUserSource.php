@@ -15,6 +15,7 @@ class DBUserSource extends LocalUserSource
 
     protected function doConnect()
     {
+        throw new Exception('cannot use db');
         $host = self::$config['host'];
         $port = self::$config['port'];
         $dbName = self::$config['db_name'];

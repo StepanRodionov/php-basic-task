@@ -32,6 +32,9 @@ class UsersRepository
             return $user;
         }, $userData);
 
+        if (!$users) {
+            throw new Exception('No users');
+        }
         return $users;
     }
 

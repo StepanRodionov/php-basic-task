@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Otus\Demoapp\GlobalSettings;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/requirements.php';
@@ -35,10 +37,15 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/requirements.php';
 $settings = GlobalSettings::getInitialisedSettings();
 $sourceClass = $settings['services']['user_source'];
 
-$source = new $sourceClass();
+    $source = new $sourceClass();
+    if(!$source->getConnection()){
+        throw new Exception('Error db connection');
+    }
+
+
 $userRepository = new UsersRepository($source);
 
-$users = $userRepository->getUsers();
+
 ?>
 
 <table border="1">
@@ -54,8 +61,21 @@ $users = $userRepository->getUsers();
     </thead>
     <tbody>
 <?php //  не используем альтернативный синтаксис foreach(): endforeach;
+
+$logger = new Logger('my_logger');
+$logger->pushHandler(new StreamHandler($_SERVER['DOCUMENT_ROOT'] . '/storage/monolog.log', Logger::INFO));
+$logger->pushHandler(new StreamHandler($_SERVER['DOCUMENT_ROOT'] . '/storage/errors.log', Logger::ERROR));
+
+
 /** @var User $user */
-foreach ($users as $user) { ?>
+
+
+foreach ($users as $user) {
+    $logger->info('Получены данные пользователя', ['user' => $user->toArray()]);
+    $logger->info('Получены данные пользователя', ['user' => $user->toArray()]);
+    $logger->info('Получены данные пользователя', ['user' => $user->toArray()]);
+
+    ?>
 
         <tr>
             <td>
@@ -77,7 +97,9 @@ foreach ($users as $user) { ?>
             <td><?= $user->getEmail()?></td>
             <td><?= $user->getCreatedAt()?></td>
         </tr>
-<?php } ?>
+<?php }
+$logger->error('Какая-то ошибка');
+?>
     </tbody>
 </table>
 

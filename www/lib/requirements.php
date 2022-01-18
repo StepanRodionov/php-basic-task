@@ -18,7 +18,7 @@ session_start();
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
+$dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT'], '.env.dev');
 $dotenv->load();
 
 // dd($_ENV);   // Наши envs тут!
@@ -33,9 +33,11 @@ GlobalSettings::createFromArray($settings);
  * Настраиваем логгер
  */
 $logger = new Logger('my_logger');
-$logger->pushHandler(new StreamHandler($_SERVER['DOCUMENT_ROOT'] . '/storage/monolog.log', Logger::DEBUG));
+$logger->pushHandler(new StreamHandler($_SERVER['DOCUMENT_ROOT'] . '/storage/monolog.log', Logger::WARNING));
 
-$logger->info('My logger is now ready');
+$GLOBALS['logger'] = $logger;
+//$logger->info('My logger is now ready');
+//$logger->error('Error');
 
 require_once 'User.php';
 require_once 'form.php';

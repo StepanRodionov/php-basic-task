@@ -126,6 +126,14 @@ class User {
         $this->id = $id;
     }
 
+    public function toArray()
+    {
+        return [
+           'name' =>  $this->name,
+           'surname' => $this->surname,
+           'id' =>  $this->id,
+        ];
+    }
 
 }
 

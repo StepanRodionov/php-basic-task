@@ -28,4 +28,9 @@ abstract class LocalUserSource implements UserSourceInterface
     abstract protected function doConnect();
 
     abstract protected function getData(): array;
+
+    public function getConnection()
+    {
+        return $this->connection;
+    }
 }

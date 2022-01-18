@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+
 if (!defined('APP_STARTED')) {
     die();
 }
@@ -44,12 +47,20 @@ function addUser()
         die('Имя и фамилия обязательны');
     }
 
+
+
+
     // Обработаем ошибку БД, если она случится
     try{
         insertUser($userData);
+        /** @var \Monolog\Logger $logger */
+        $logger = new Logger('my_logger');
+        $logger->pushHandler(new StreamHandler($_SERVER['DOCUMENT_ROOT'] . '/storage/monolog.log', Logger::INFO));
+
+        $logger->info('Добавлен пользователь', ['user' => $userData]);
         logData("Добавлен клиент {$userData['NAME']} {$userData['SURNAME']}");
     } catch (Throwable $e) {
-        var_dump($e);
+        dd($e);
     }
 
     return 'add_success';
