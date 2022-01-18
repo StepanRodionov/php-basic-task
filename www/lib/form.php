@@ -7,8 +7,8 @@ if (!defined('APP_STARTED')) {
 
 require_once 'db.php';
 
-$type = $_POST['type'];
-if (!isset($_POST['type'])) {
+$type = $_POST['type'] ?? null;
+if (null === $type) {
     return;
 }
 $csrfToken = $_POST['csrf-token'];
