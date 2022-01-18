@@ -6,6 +6,7 @@ if (!defined('APP_STARTED')) {
 }
 
 require_once 'db.php';
+require_once 'log.php';
 
 $type = $_POST['type'] ?? null;
 if (null === $type) {
@@ -46,6 +47,7 @@ function addUser()
     // Обработаем ошибку БД, если она случится
     try{
         insertUser($userData);
+        logData("Добавлен пользователь: {$userData['NAME']} {$userData['SURNAME']}");
     } catch (Throwable $e) {
         var_dump($e);
     }
@@ -84,10 +86,16 @@ function importUsers()
 
         // Имя и фамилия обязательны!
         if (!$userData['NAME'] || !$userData['SURNAME']) {
-            // Нужна запись в лог
+            logData(sprintf(
+                'Ошибка при добавлении пользователя: %s. Данные пользователя: %s',
+                    'отсутствует имя или фамилия',
+                    implode('|', $userData)
+                )
+            );
             continue;
         }
         insertUser($userData);
+        logData("Добавлен пользователь: {$userData['NAME']} {$userData['SURNAME']}");
     }
 
     return 'import_success';
