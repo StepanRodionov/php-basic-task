@@ -16,6 +16,8 @@
     - найти в логах запись вида `mysql -uadmin -p9LMc2eoadfUQ -h<host> -P<port>`
     - скопировать пароль (из записи выше -p9LMc2eoadfUQ , только без "-p": 9LMc2eoadfUQ)
     - записать пароль в массив $conf в файле db.php (в ключ password)
+    - зайти в localhost/phpmyadmin с логином admin и паролем из прошлого шага
+    - выполнить в SQL консоли скрипт из файла /www/setup/start.sql
 
 После запуска:
  - установить nano apt update + apt install nano
