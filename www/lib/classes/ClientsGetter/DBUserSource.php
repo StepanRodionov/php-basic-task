@@ -10,7 +10,7 @@ class DBUserSource extends LocalUserSource
         'port' => 3306,
         'db_name' => 'public',
         'username' => 'admin',
-        'password' => 'ad9NSgzgioyf'
+        'password' => '9LMc2eoadFUQ'
     ];
 
     protected function doConnect()
