@@ -85,9 +85,9 @@ function getUserById(int $id): User
     return createUserFromArray($result);
 }
 
-function createUserFromArray(array $result): Admin
+function createUserFromArray(array $result): User
 {
-    $user = new Admin();
+    $user = new User();
     $user->setId($result['id']);
     $user->setName($result['name']);
     $user->setSurname($result['surname']);
