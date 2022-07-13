@@ -12,6 +12,3 @@ services:
     ports:
       - "80:80"
       - "3306:3306"
-
-networks:
-  my_app_net:

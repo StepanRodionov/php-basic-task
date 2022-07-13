@@ -10,7 +10,7 @@ $conf = [
   'port' => 3306,
   'db_name' => 'public',
   'username' => 'admin',
-  'password' => '9LMc2eoadFUQ'
+  'password' => 'mAaSuHka7u5D'
 ];
 
 $connection = null;
