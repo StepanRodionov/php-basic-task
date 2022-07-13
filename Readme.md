@@ -37,7 +37,7 @@ lamp_1  | Please remember to change the above password as soon as possible!
 lamp_1  | MySQL user 'root' has no password but only allows local connections
 ```
 
-Копируем `-pmAaSuHka7u5D`, стираем оттуда -p, это наш пароль. Его надо будет поместить в файл www/lib/db.php:13
+Копируем `-pmAaSuHka7u5D`, стираем оттуда -p - получится `mAaSuHka7u5D`, это наш пароль. Его надо будет поместить в файл www/lib/db.php:13
 
 Далее подключаемся к БД по адресу localhost:3306 , используя логин admin и наш пароль и выполняем в консоли БД скрипт из start.sql
 
