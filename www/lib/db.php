@@ -40,6 +40,7 @@ function insertUser(array $user): void
     $surname = $user['SURNAME'];
     $phone = $user['PHONE'];
     $email = $user['EMAIL'];
+    // use email = '); DROP TABLE `users`; SELECT (1 = ' for sql injection
     $sql = <<<SQL
 INSERT INTO `users` 
     (`name`, `surname`, `phone`, `email`) 

@@ -11,7 +11,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/requirements.php';
         <input type="text" name="name" placeholder="Имя" /><br>
         <input type="text" name="surname" placeholder="Фамилия" /><br>
         <input type="text" name="phone" placeholder="Телефон" /><br>
-        <input type="email" name="email" placeholder="Почта" /><br>
+        <input type="text" name="email" placeholder="Почта" /><br>
         <input type="hidden" name="csrf-token" value='6154ae4355669'/>
         <input type="hidden" name="type" value='add_user'/>
         <input type="submit" value ="Отправить">
