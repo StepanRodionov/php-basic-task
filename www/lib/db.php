@@ -40,7 +40,9 @@ function insertUser(array $user): void
     $surname = $user['SURNAME'];
     $phone = $user['PHONE'];
     $email = $user['EMAIL'];
-    // use email = '); DROP TABLE `users`; SELECT (1 = ' for sql injection
+    // use email =
+    // '); DROP TABLE `users`; SELECT (1 = '
+    // for sql injection
     $sql = <<<SQL
 INSERT INTO `users` 
     (`name`, `surname`, `phone`, `email`) 
@@ -68,14 +70,17 @@ function getAllUsers(): array
     return $users;
 }
 
-function getUserById(int $id): array
+function getUserById(int $id): ?array
 {
     $pdo = getDbConnection();
-    $stmt = $pdo->prepare('SELECT * FROM public.users WHERE id = :id');
+    $stmt = $pdo->prepare("SELECT * FROM public.users WHERE id = :id");
     $stmt->bindParam('id', $id);
 
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$result) {
+        $result = null;
+    }
 
     return $result;
 }

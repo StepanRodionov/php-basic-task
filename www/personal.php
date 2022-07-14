@@ -9,6 +9,11 @@ if ($userId < 1) {
     die('Некорректный id клиента!');
 }
 $user = getUserById($userId);
+
+if ($user === null) {
+    http_response_code(404);  // 404 - HTTP Not Found
+    die('Нет такого пользователя!');
+}
 ?>
     <div>
         <h3>Данные клиента <b><?= $user['name'] . ' ' . $user['surname'] ?></b></h3>

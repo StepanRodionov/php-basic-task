@@ -34,14 +34,14 @@ switch ($type) {
 function addUser()
 {
     $userData = [];
-    $userData['NAME'] = $_POST['name'];
-    $userData['SURNAME'] = $_POST['surname'];
-    $userData['PHONE'] = $_POST['phone'];
-    $userData['EMAIL'] = $_POST['email'];
+    $userData['NAME'] = htmlspecialchars($_POST['name']);
+    $userData['SURNAME'] = htmlspecialchars($_POST['surname']);
+    $userData['PHONE'] = htmlspecialchars($_POST['phone']);
+    $userData['EMAIL'] = htmlspecialchars($_POST['email']);
 
     // Имя и фамилия обязательны!
     if (!$userData['NAME'] || !$userData['SURNAME'] || !$userData['PHONE']) {
-        die('Имя и фамилия обязательны');
+        die('Имя, фамилия и телефон обязательны!');
     }
 
     // Обработаем ошибку БД, если она случится
@@ -49,6 +49,7 @@ function addUser()
         insertUser($userData);
         logData("Добавлен клиент {$userData['NAME']} {$userData['SURNAME']}");
     } catch (Throwable $e) {
+        logData($e->getMessage());
         var_dump($e);
     }
 
@@ -78,18 +79,21 @@ function importUsers()
     array_shift($users);
 
     $userData = [];
+    $i = 1;
     foreach ($users as $user) {
-        $userData['NAME'] = $user[0];
-        $userData['SURNAME'] = $user[1];
-        $userData['PHONE'] = $user[2];
-        $userData['EMAIL'] = $user[3];
+        $userData['NAME'] = htmlspecialchars($user[0]);
+        $userData['SURNAME'] = htmlspecialchars($user[1]);
+        $userData['PHONE'] = htmlspecialchars($user[2]);
+        $userData['EMAIL'] = htmlspecialchars($user[3]);
 
         // Имя и фамилия обязательны!
         if (!$userData['NAME'] || !$userData['SURNAME'] || !$userData['PHONE']) {
-            // Нужна запись в лог
+            logData("Ошибка в строке $i: не хватает обязательных полей");
             continue;
         }
         insertUser($userData);
+        logData("Импортирован клиент {$userData['NAME']} {$userData['SURNAME']}");
+        $i++;
     }
 
     return 'import_success';
