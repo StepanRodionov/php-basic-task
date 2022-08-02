@@ -34,7 +34,7 @@ class User
         );
 
         return $user
-            ->setId($userData['id'])
+            ->setId((int)$userData['id'])
             ->setCreatedAt($userData['created_at']);
     }
 
