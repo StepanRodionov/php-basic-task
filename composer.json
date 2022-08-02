@@ -1,0 +1,16 @@
+{
+    "name": "stepan.radionov/demoproject",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Stepan.Rodionov",
+            "email": "Stepan.Rodionov@x5.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "www/lib/classes"
+        }
+    },
+    "require": {}
+}

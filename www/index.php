@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use App\User;
+
 require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/requirements.php';
 
 ?>
@@ -43,28 +45,30 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/requirements.php';
         </tr>
     </thead>
     <tbody>
-<?php //  не используем альтернативный синтаксис foreach(): endforeach;
+<?php
+//  не используем альтернативный синтаксис foreach(): endforeach;
+/** @var User $user */
 foreach ($users as $user) { ?>
 
         <tr>
             <td>
-                <a href="/personal.php?user_id=<?= $user['id']?>">
-                    <?= $user['id']?>
+                <a href="/personal.php?user_id=<?= $user->getId() ?>">
+                    <?= $user->getId() ?>
                 </a>
             </td>
             <td>
-                <a href="/personal.php?user_id=<?= $user['id']?>">
-                    <?= $user['name']?>
+                <a href="/personal.php?user_id=<?= $user->getId() ?>">
+                    <?= $user->getName() ?>
                 </a>
             </td>
             <td>
-                <a href="/personal.php?user_id=<?= $user['id']?>">
-                    <?= $user['surname']?>
+                <a href="/personal.php?user_id=<?= $user->getId() ?>">
+                    <?= $user->getSurname() ?>
                 </a>
             </td>
-            <td><?= $user['phone']?></td>
-            <td><?= $user['email']?></td>
-            <td><?= $user['created_at']?></td>
+            <td><?= $user->getPhone() ?></td>
+            <td><?= $user->getEmail() ?></td>
+            <td><?= $user->getCreatedAt() ?></td>
         </tr>
 <?php } ?>
     </tbody>

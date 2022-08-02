@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use App\User;
+
 if (!defined('APP_STARTED')) {
     die();
 }
@@ -33,21 +35,21 @@ switch ($type) {
 
 function addUser()
 {
-    $userData = [];
-    $userData['NAME'] = htmlspecialchars($_POST['name']);
-    $userData['SURNAME'] = htmlspecialchars($_POST['surname']);
-    $userData['PHONE'] = htmlspecialchars($_POST['phone']);
-    $userData['EMAIL'] = htmlspecialchars($_POST['email']);
+    $user = new User(
+        htmlspecialchars($_POST['name']),
+        htmlspecialchars($_POST['surname']),
+        htmlspecialchars($_POST['phone']),
+        htmlspecialchars($_POST['email'])
+    );
 
-    // Имя и фамилия обязательны!
-    if (!$userData['NAME'] || !$userData['SURNAME'] || !$userData['PHONE']) {
+    if (!$user->isValid()) {
         die('Имя, фамилия и телефон обязательны!');
     }
 
     // Обработаем ошибку БД, если она случится
     try{
-        insertUser($userData);
-        logData("Добавлен клиент {$userData['NAME']} {$userData['SURNAME']}");
+        insertUser($user);
+        logData("Добавлен клиент {$user->getFullName()}");
     } catch (Throwable $e) {
         logData($e->getMessage());
         var_dump($e);
@@ -78,21 +80,22 @@ function importUsers()
     // Первая строка - это заголовок, удаляем ее
     array_shift($users);
 
-    $userData = [];
     $i = 1;
-    foreach ($users as $user) {
-        $userData['NAME'] = htmlspecialchars($user[0]);
-        $userData['SURNAME'] = htmlspecialchars($user[1]);
-        $userData['PHONE'] = htmlspecialchars($user[2]);
-        $userData['EMAIL'] = htmlspecialchars($user[3]);
+    foreach ($users as $userData) {
+        $user = new User(
+            htmlspecialchars($userData[0]),
+            htmlspecialchars($userData[1]),
+            htmlspecialchars($userData[2]),
+            htmlspecialchars($userData[3])
+        );
 
         // Имя и фамилия обязательны!
-        if (!$userData['NAME'] || !$userData['SURNAME'] || !$userData['PHONE']) {
+        if (!$user->isValid()) {
             logData("Ошибка в строке $i: не хватает обязательных полей");
             continue;
         }
-        insertUser($userData);
-        logData("Импортирован клиент {$userData['NAME']} {$userData['SURNAME']}");
+        insertUser($user);
+        logData("Импортирован клиент {$user->getFullName()}");
         $i++;
     }
 

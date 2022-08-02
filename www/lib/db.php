@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use App\User;
+
 if (!defined('APP_STARTED')) {
     die();
 }
@@ -33,13 +35,13 @@ function connectDb($host, $port, $dbName, $username, $password): PDO
     return $pdo;
 }
 
-function insertUser(array $user): void
+function insertUser(User $user): void
 {
     $pdo = getDbConnection();
-    $name = $user['NAME'];
-    $surname = $user['SURNAME'];
-    $phone = $user['PHONE'];
-    $email = $user['EMAIL'];
+    $name = $user->getName();
+    $surname = $user->getSurname();
+    $phone = $user->getPhone();
+    $email = $user->getEmail();
     // use email =
     // '); DROP TABLE `users`; SELECT (1 = '
     // for sql injection
@@ -67,10 +69,12 @@ function getAllUsers(): array
      */
     $users = $result->fetchAll(PDO::FETCH_ASSOC);
 
-    return $users;
+    return array_map(static function(array $userData){
+        return User::createFromRawData($userData);
+    }, $users);
 }
 
-function getUserById(int $id): ?array
+function getUserById(int $id): ?User
 {
     $pdo = getDbConnection();
     $stmt = $pdo->prepare("SELECT * FROM public.users WHERE id = :id");
@@ -79,8 +83,8 @@ function getUserById(int $id): ?array
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$result) {
-        $result = null;
+        return null;
     }
 
-    return $result;
+    return User::createFromRawData($result);
 }
