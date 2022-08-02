@@ -1,6 +1,10 @@
 <?php
 declare(strict_types=1);
 
+use App\ClientsGetter\DBUserSource;
+use App\ClientsGetter\FileUserSource;
+use App\ClientsGetter\HttpUserSource;
+use App\ClientsGetter\UsersRepository;
 use App\User;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/requirements.php';
@@ -31,7 +35,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/requirements.php';
         <input type="submit" value ="Загрузить пользователей">
     </form>
 </div>
-<?php $users = getAllUsers(); ?>
 
 <table border="1">
     <thead>
@@ -46,7 +49,17 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/requirements.php';
     </thead>
     <tbody>
 <?php
-//  не используем альтернативный синтаксис foreach(): endforeach;
+$users = getAllUsers();
+
+/** Блок ниже используем для демонстрации абстрактных классов */
+//$source = new DBUserSource();
+//$source = new FileUserSource();
+//$source = new HttpUserSource();
+//$userRepository = new UsersRepository($source);
+//
+//$users = $userRepository->getUsers();
+
+
 /** @var User $user */
 foreach ($users as $user) { ?>
 
