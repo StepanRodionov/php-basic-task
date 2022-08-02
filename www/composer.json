@@ -12,5 +12,7 @@
             "App\\": "lib/classes"
         }
     },
-    "require": {}
+    "require": {
+      "ext-pdo": "*"
+    }
 }

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\ClientsGetter;
 
+use \PDO;
+
 class DBUserSource extends LocalUserSource
 {
     static protected array $config = [
