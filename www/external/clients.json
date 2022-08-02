@@ -1,0 +1,36 @@
+{
+  "clients": [
+    {
+      "id": 1,
+      "name": "Николай",
+      "surname": "Семенов",
+      "phone": "+79991234545",
+      "email": "email1@mail.ru",
+      "created_at": "2021-01-11 12:00:00"
+    },
+    {
+      "id": 2,
+      "name": "Елена",
+      "surname": "Цветкова",
+      "phone": "+79056778080",
+      "email": "elen_ts@ya.ru",
+      "created_at": "2021-01-12 12:00:00"
+    },
+    {
+      "id": 3,
+      "name": "Филипп",
+      "surname": "Добрыгин",
+      "phone": "",
+      "email": "phil1986@yandex.ru",
+      "created_at": "2021-01-13 12:00:00"
+    },
+    {
+      "id": 4,
+      "name": "Кирилл",
+      "surname": "Бестужев-Рюмин",
+      "phone": "89153334545",
+      "email": "megamail@gmail.com",
+      "created_at": "2021-01-14 12:00:00"
+    }
+  ]
+}
