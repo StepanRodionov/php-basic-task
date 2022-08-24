@@ -49,15 +49,15 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/requirements.php';
     </thead>
     <tbody>
 <?php
-$users = getAllUsers();
+//$users = getAllUsers();
 
 /** Блок ниже используем для демонстрации абстрактных классов */
-//$source = new DBUserSource();
+$source = new DBUserSource();
 //$source = new FileUserSource();
 //$source = new HttpUserSource();
-//$userRepository = new UsersRepository($source);
-//
-//$users = $userRepository->getUsers();
+$userRepository = new UsersRepository($source);
+
+$users = $userRepository->getUsers();
 
 
 /** @var User $user */

@@ -2,6 +2,8 @@
 declare(strict_types=1);
 
 use App\User;
+use App\UserFactory;
+use App\UserInterface;
 
 if (!defined('APP_STARTED')) {
     die();
@@ -12,7 +14,7 @@ $conf = [
   'port' => 3306,
   'db_name' => 'public',
   'username' => 'admin',
-  'password' => 'mAaSuHka7u5D'
+  'password' => 'YDCS3GpG9GH6'
 ];
 
 $connection = null;
@@ -35,7 +37,7 @@ function connectDb($host, $port, $dbName, $username, $password): PDO
     return $pdo;
 }
 
-function insertUser(User $user): void
+function insertUser(UserInterface $user): void
 {
     $pdo = getDbConnection();
     $name = $user->getName();
@@ -70,11 +72,11 @@ function getAllUsers(): array
     $users = $result->fetchAll(PDO::FETCH_ASSOC);
 
     return array_map(static function(array $userData){
-        return User::createFromRawData($userData);
+        return UserFactory::createUserFromRawData($userData);
     }, $users);
 }
 
-function getUserById(int $id): ?User
+function getUserById(int $id): ?UserInterface
 {
     $pdo = getDbConnection();
     $stmt = $pdo->prepare("SELECT * FROM public.users WHERE id = :id");
@@ -86,5 +88,5 @@ function getUserById(int $id): ?User
         return null;
     }
 
-    return User::createFromRawData($result);
+    return UserFactory::createUserFromRawData($result);
 }

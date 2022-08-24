@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use App\ClientsGetter\Singleton;
 use App\User;
 
 if (!defined('APP_STARTED')) {

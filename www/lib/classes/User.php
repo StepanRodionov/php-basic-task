@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App;
 
-class User
+class User implements UserInterface
 {
     private ?int $id;
     private string $name;
@@ -22,20 +22,6 @@ class User
         $this->surname = $surname;
         $this->phone = $phone;
         $this->email = $email;
-    }
-
-    public static function createFromRawData(array $userData): User
-    {
-        $user = new User(
-            $userData['name'],
-            $userData['surname'],
-            $userData['phone'],
-            $userData['email'],
-        );
-
-        return $user
-            ->setId((int)$userData['id'])
-            ->setCreatedAt($userData['created_at']);
     }
 
     /**
